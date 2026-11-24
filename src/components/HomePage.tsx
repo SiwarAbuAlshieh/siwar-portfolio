@@ -1,49 +1,38 @@
-import { ArrowUpRight, Download, Mail, MapPin } from "lucide-react";
-import {
-  about,
-  ai,
-  brands,
-  approach,
-  communication,
-  contact,
-  cro,
-  education,
-  experience,
-  expertise,
-  marketing,
-  site,
-  skills,
-  taskManagement,
-} from "@/content/site";
-import { Brands } from "@/components/Brands";
-import { Button } from "@/components/Button";
-import { Card } from "@/components/Card";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
-import { Highlights } from "@/components/Highlights";
-import { IconList } from "@/components/IconList";
-import { Reveal } from "@/components/Reveal";
-import { Section } from "@/components/Section";
-import { Eyebrow, Hairline, SectionHeading } from "@/components/SectionHeading";
-import { Timeline } from "@/components/Timeline";
-import { FlowDiagram, ToolPanel } from "@/components/ToolPanel";
-import { Workflow } from "@/components/Workflow";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Download, Mail, MapPin } from "lucide-react";
+import type { SiteContent } from "@/content/site";
+import { Brands } from "./Brands";
+import { Button } from "./Button";
+import { Card } from "./Card";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { Hero } from "./Hero";
+import { Highlights } from "./Highlights";
+import { IconList } from "./IconList";
+import { Reveal } from "./Reveal";
+import { Section } from "./Section";
+import { Eyebrow, Hairline, SectionHeading } from "./SectionHeading";
+import { Timeline } from "./Timeline";
+import { FlowDiagram, ToolPanel } from "./ToolPanel";
+import { Workflow } from "./Workflow";
 
-export default function Home() {
+/** The full single-page portfolio, rendered from one language's content. */
+export function HomePage({ c }: { c: SiteContent }) {
+  const { site, ui } = c;
+  const ChainArrow = c.dir === "rtl" ? ArrowLeft : ArrowRight;
+
   return (
     <>
-      <Header />
+      <Header nav={c.nav} ui={ui} name={site.name} />
       <main id="main" tabIndex={-1} className="outline-none">
-        <Hero />
-        <Highlights />
+        <Hero hero={c.hero} site={site} />
+        <Highlights items={c.highlights} label={ui.atAGlance} />
 
         {/* 01 — About */}
-        <Section id={about.meta.id} tone="ivory">
+        <Section id={c.about.meta.id} tone="ivory">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-            <SectionHeading meta={about.meta} className="lg:col-span-5" />
+            <SectionHeading meta={c.about.meta} className="lg:col-span-5" />
             <div className="space-y-6 text-[17px] text-charcoal/85 lg:col-span-7 lg:pt-14">
-              {about.paragraphs.map((p, i) => (
+              {c.about.paragraphs.map((p, i) => (
                 <p key={i} className={`max-w-[65ch] ${i === 0 ? "text-[19px] text-charcoal" : ""}`}>
                   {p}
                 </p>
@@ -53,20 +42,20 @@ export default function Home() {
         </Section>
 
         {/* 02 — Expertise */}
-        <Section id={expertise.meta.id} tone="white">
-          <SectionHeading meta={expertise.meta} />
-          <IconList items={expertise.items} columns={3} wideLast className="mt-14" />
-          <p className="mt-10 max-w-[65ch] font-serif text-[1.45rem] leading-snug text-charcoal italic">
-            {expertise.note}
+        <Section id={c.expertise.meta.id} tone="white">
+          <SectionHeading meta={c.expertise.meta} />
+          <IconList items={c.expertise.items} columns={3} wideLast className="mt-14" />
+          <p className="accent-quote mt-10 max-w-[65ch] font-serif text-[1.45rem] leading-snug text-charcoal italic">
+            {c.expertise.note}
           </p>
         </Section>
 
         {/* 03 — CRO & UX */}
-        <Section id={cro.meta.id} tone="ivory">
-          <SectionHeading meta={cro.meta} intro={cro.intro} />
-          <h3 className="mt-14 font-serif text-[1.85rem] font-medium text-charcoal">{cro.reviewTitle}</h3>
+        <Section id={c.cro.meta.id} tone="ivory">
+          <SectionHeading meta={c.cro.meta} intro={c.cro.intro} />
+          <h3 className="mt-14 font-serif text-[1.85rem] font-medium text-charcoal">{c.cro.reviewTitle}</h3>
           <ol className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {cro.items.map((item, i) => (
+            {c.cro.items.map((item, i) => (
               <li
                 key={item.title}
                 className="rounded-[5px] border border-beige bg-white p-6 transition-shadow duration-300 hover:shadow-[0_10px_30px_-18px_rgba(28,28,28,0.18)]"
@@ -82,78 +71,76 @@ export default function Home() {
         </Section>
 
         {/* 04 — Brands */}
-        <Section id={brands.meta.id} tone="white">
-          <SectionHeading meta={brands.meta} />
-          <Brands />
+        <Section id={c.brands.meta.id} tone="white">
+          <SectionHeading meta={c.brands.meta} />
+          <Brands brands={c.brands} />
         </Section>
 
         {/* 05 — Client communication (prominent band) */}
-        <Section id={communication.meta.id} tone="sand">
-          <SectionHeading meta={communication.meta} />
-          <IconList items={communication.items} columns={3} className="mt-14" />
+        <Section id={c.communication.meta.id} tone="sand">
+          <SectionHeading meta={c.communication.meta} />
+          <IconList items={c.communication.items} columns={3} className="mt-14" />
         </Section>
 
         {/* 06 — Project & task management */}
-        <Section id={taskManagement.meta.id} tone="ivory">
-          <SectionHeading meta={taskManagement.meta} />
+        <Section id={c.taskManagement.meta.id} tone="ivory">
+          <SectionHeading meta={c.taskManagement.meta} />
           <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2">
-            <ToolPanel panel={taskManagement.panels[0]} emphasis />
-            <ToolPanel panel={taskManagement.panels[1]} />
+            <ToolPanel panel={c.taskManagement.panels[0]} emphasis />
+            <ToolPanel panel={c.taskManagement.panels[1]} />
           </div>
           <div className="mt-14">
-            <FlowDiagram steps={taskManagement.flow} label="From business requirement to progress update" />
-            <p className="mt-6 text-center text-[15px] text-grey">{taskManagement.flowNote}</p>
+            <FlowDiagram steps={c.taskManagement.flow} label={ui.flowLabel} />
+            <p className="mt-6 text-center text-[15px] text-grey">{c.taskManagement.flowNote}</p>
           </div>
         </Section>
 
         {/* 07 — Marketing technology */}
-        <Section id={marketing.meta.id} tone="white">
-          <SectionHeading meta={marketing.meta} />
-          <IconList items={marketing.items} columns={3} variant="plain" className="mt-14" />
+        <Section id={c.marketing.meta.id} tone="white">
+          <SectionHeading meta={c.marketing.meta} />
+          <IconList items={c.marketing.items} columns={3} variant="plain" className="mt-14" />
         </Section>
 
         {/* 08 — AI */}
-        <Section id={ai.meta.id} tone="ivory">
-          <SectionHeading meta={ai.meta} />
-          <IconList items={ai.items} columns={2} className="mt-14" />
+        <Section id={c.ai.meta.id} tone="ivory">
+          <SectionHeading meta={c.ai.meta} />
+          <IconList items={c.ai.items} columns={2} className="mt-14" />
         </Section>
 
         {/* 09 — Approach */}
-        <Section id={approach.meta.id} tone="white">
-          <SectionHeading meta={approach.meta} />
+        <Section id={c.approach.meta.id} tone="white">
+          <SectionHeading meta={c.approach.meta} />
           <div className="mt-16">
-            <Workflow steps={approach.steps} />
+            <Workflow steps={c.approach.steps} stepLabel={ui.step} />
           </div>
-          <p className="mt-12 text-[14px] text-grey italic">{approach.note}</p>
+          <p className="mt-12 text-[14px] text-grey italic">{c.approach.note}</p>
 
           <Card className="mt-14 bg-ivory md:p-12">
             <h3 className="font-serif text-[1.85rem] leading-tight font-medium text-charcoal">
-              {approach.croTitle}
+              {c.approach.croTitle}
             </h3>
             <ol
-              aria-label="Conversion optimization sequence"
+              aria-label={ui.croSequence}
               className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-2 text-[15px] font-medium text-charcoal"
             >
-              {approach.croChain.map((step, i) => (
+              {c.approach.croChain.map((step, i) => (
                 <li key={step} className="flex items-center gap-2">
                   <span>{step}</span>
-                  {i < approach.croChain.length - 1 ? (
-                    <span aria-hidden="true" className="text-champagne">
-                      →
-                    </span>
+                  {i < c.approach.croChain.length - 1 ? (
+                    <ChainArrow aria-hidden="true" strokeWidth={1.5} className="h-4 w-4 text-champagne" />
                   ) : null}
                 </li>
               ))}
             </ol>
-            <p className="mt-6 max-w-[70ch] text-[16px] text-charcoal/85">{approach.croText}</p>
+            <p className="mt-6 max-w-[70ch] text-[16px] text-charcoal/85">{c.approach.croText}</p>
           </Card>
         </Section>
 
         {/* 10 — Skills */}
-        <Section id={skills.meta.id} tone="ivory">
-          <SectionHeading meta={skills.meta} />
+        <Section id={c.skills.meta.id} tone="ivory">
+          <SectionHeading meta={c.skills.meta} />
           <div className="mt-14 grid grid-cols-1 gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
-            {skills.groups.map((group) => (
+            {c.skills.groups.map((group) => (
               <div key={group.title} className="border-t border-beige pt-6">
                 <h3 className="font-sans text-[16px] font-semibold text-charcoal">{group.title}</h3>
                 <ul className="mt-4 flex flex-wrap gap-2">
@@ -172,47 +159,48 @@ export default function Home() {
         </Section>
 
         {/* 11 — Experience */}
-        <Section id={experience.meta.id} tone="white">
-          <SectionHeading meta={experience.meta} />
-          <Timeline entries={experience.entries} />
+        <Section id={c.experience.meta.id} tone="white">
+          <SectionHeading meta={c.experience.meta} />
+          <Timeline entries={c.experience.entries} />
         </Section>
 
         {/* 12 — Education */}
-        <Section id={education.meta.id} tone="ivory">
-          <SectionHeading meta={education.meta} />
-          <IconList items={education.items} columns={2} variant="plain" className="mt-12" />
+        <Section id={c.education.meta.id} tone="ivory">
+          <SectionHeading meta={c.education.meta} />
+          <IconList items={c.education.items} columns={2} variant="plain" className="mt-12" />
         </Section>
 
         {/* 13 — Contact */}
-        <Section id={contact.meta.id} tone="charcoal">
+        <Section id={c.contact.meta.id} tone="charcoal">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <Eyebrow onDark>
-                {contact.meta.number} — {contact.meta.eyebrow}
+                {c.contact.meta.number} — {c.contact.meta.eyebrow}
               </Eyebrow>
               <Hairline className="mt-4" />
               <h2
-                id={`${contact.meta.id}-title`}
+                id={`${c.contact.meta.id}-title`}
                 className="mt-6 text-[2.75rem] leading-[1.05] font-medium tracking-[-0.01em] text-ivory md:text-6xl"
               >
-                {contact.meta.title}
+                {c.contact.meta.title}
               </h2>
-              <p className="mt-6 max-w-[52ch] text-[17px] text-ivory/85">{contact.text}</p>
+              <p className="mt-6 max-w-[52ch] text-[17px] text-ivory/85">{c.contact.text}</p>
               <div className="mt-9 flex flex-wrap gap-4">
                 <Button href={`mailto:${site.email}`} onDark>
                   <Mail aria-hidden="true" strokeWidth={1.5} className="h-[18px] w-[18px]" />
-                  {contact.emailButton}
+                  {c.contact.emailButton}
                 </Button>
                 <Button href={site.cvPath} variant="secondary" onDark download>
                   <Download aria-hidden="true" strokeWidth={1.5} className="h-[18px] w-[18px]" />
-                  {contact.cvButton}
+                  {c.contact.cvButton}
                 </Button>
               </div>
             </div>
-            <div className="flex flex-col justify-end gap-6 border-t border-ivory/15 pt-10 lg:col-span-5 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-12">
+            <div className="flex flex-col justify-end gap-6 border-t border-ivory/15 pt-10 lg:col-span-5 lg:border-t-0 lg:border-s lg:pt-0 lg:ps-12">
               <a
                 href={`mailto:${site.email}`}
-                className="font-serif text-[1.6rem] leading-tight break-words text-ivory underline decoration-champagne/60 decoration-1 underline-offset-[8px] hover:text-champagne sm:text-[2rem]"
+                dir="ltr"
+                className="font-latin-serif w-fit text-[1.6rem] leading-tight break-words text-ivory underline decoration-champagne/60 decoration-1 underline-offset-[8px] hover:text-champagne sm:text-[2rem]"
               >
                 {site.email}
               </a>
@@ -224,7 +212,7 @@ export default function Home() {
               >
                 LinkedIn
                 <ArrowUpRight aria-hidden="true" strokeWidth={1.5} className="h-4 w-4 text-champagne" />
-                <span className="sr-only">(opens in a new tab)</span>
+                <span className="sr-only">{ui.newTab}</span>
               </a>
               <p className="inline-flex items-center gap-2 text-[16px] text-ivory/80">
                 <MapPin aria-hidden="true" strokeWidth={1.5} className="h-4 w-4 text-champagne" />
@@ -234,7 +222,7 @@ export default function Home() {
           </div>
         </Section>
       </main>
-      <Footer />
+      <Footer site={site} ui={ui} />
       <Reveal />
     </>
   );

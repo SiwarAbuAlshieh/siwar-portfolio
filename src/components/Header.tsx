@@ -2,9 +2,11 @@
 
 import { Menu, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { nav, site } from "@/content/site";
+import type { SiteContent } from "@/content/site";
 
-export function Header() {
+type HeaderProps = Pick<SiteContent, "nav" | "ui"> & { name: string };
+
+export function Header({ nav, ui, name }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
@@ -45,7 +47,7 @@ export function Header() {
     );
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, []);
+  }, [nav]);
 
   const close = useCallback((returnFocus = true) => {
     setOpen(false);
@@ -103,6 +105,8 @@ export function Header() {
         : "text-grey"
     }`;
 
+  const lang = ui.language;
+
   return (
     <header
       className={`sticky top-0 z-50 bg-ivory/95 backdrop-blur-sm transition-[border-color] duration-300 border-b ${
@@ -111,50 +115,63 @@ export function Header() {
     >
       <a
         href="#main"
-        className="sr-only rounded-[3px] bg-charcoal px-4 py-2 text-white focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60]"
+        className="sr-only rounded-[3px] bg-charcoal px-4 py-2 text-white focus:not-sr-only focus:absolute focus:start-4 focus:top-3 focus:z-[60]"
       >
-        Skip to content
+        {ui.skipToContent}
       </a>
-      <div className="mx-auto flex h-[68px] max-w-[1200px] items-center justify-between px-6 md:px-12">
+      <div className="mx-auto flex h-[68px] max-w-[1200px] items-center justify-between gap-4 px-6 md:px-12">
         <a
           href="#home"
-          className="font-serif text-[1.45rem] font-semibold tracking-[-0.01em] text-charcoal"
+          dir="ltr"
+          className="font-latin-serif text-[1.45rem] font-semibold tracking-[-0.01em] text-charcoal"
           onClick={() => open && close(false)}
         >
-          {site.name}
+          {name}
         </a>
 
-        <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-8">
-            {nav.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className={linkClass(link.href)}
-                  aria-current={active === link.href ? "true" : undefined}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="flex items-center gap-6 lg:gap-8">
+          <nav aria-label={ui.mainNav} className="hidden lg:block">
+            <ul className="flex items-center gap-7">
+              {nav.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className={linkClass(link.href)}
+                    aria-current={active === link.href ? "true" : undefined}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <button
-          ref={toggleRef}
-          type="button"
-          className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-[3px] text-charcoal lg:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => (open ? close() : setOpen(true))}
-        >
-          {open ? (
-            <X aria-hidden="true" strokeWidth={1.5} className="h-6 w-6" />
-          ) : (
-            <Menu aria-hidden="true" strokeWidth={1.5} className="h-6 w-6" />
-          )}
-        </button>
+          <a
+            href={lang.href}
+            hrefLang={lang.hrefLang}
+            lang={lang.hrefLang}
+            title={lang.title}
+            className="rounded-[3px] border border-beige px-3 py-1.5 text-[14px] font-medium text-charcoal transition-colors hover:border-champagne hover:text-champagne-ink lg:border-s lg:ps-6 lg:border-y-0 lg:border-e-0 lg:rounded-none lg:py-2"
+          >
+            {lang.label}
+          </a>
+
+          <button
+            ref={toggleRef}
+            type="button"
+            className="-me-2 inline-flex h-11 w-11 items-center justify-center rounded-[3px] text-charcoal lg:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? ui.closeMenu : ui.openMenu}
+            onClick={() => (open ? close() : setOpen(true))}
+          >
+            {open ? (
+              <X aria-hidden="true" strokeWidth={1.5} className="h-6 w-6" />
+            ) : (
+              <Menu aria-hidden="true" strokeWidth={1.5} className="h-6 w-6" />
+            )}
+          </button>
+        </div>
       </div>
 
       {open ? (
@@ -163,7 +180,7 @@ export function Header() {
           ref={menuRef}
           className="fixed inset-x-0 top-[69px] bottom-0 z-40 overflow-y-auto bg-ivory lg:hidden"
         >
-          <nav aria-label="Mobile" className="mx-auto max-w-[1200px] px-6 py-8 md:px-12">
+          <nav aria-label={ui.mobileNav} className="mx-auto max-w-[1200px] px-6 py-8 md:px-12">
             <ul className="flex flex-col">
               {nav.map((link) => (
                 <li key={link.href} className="border-b border-beige">

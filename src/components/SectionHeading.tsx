@@ -19,7 +19,7 @@ export function Eyebrow({
 }) {
   return (
     <p
-      className={`text-[12.5px] font-semibold uppercase tracking-[0.18em] ${
+      className={`label-small text-[12.5px] font-semibold uppercase tracking-[0.18em] ${
         onDark ? "text-champagne" : "text-champagne-ink"
       } ${className}`}
     >

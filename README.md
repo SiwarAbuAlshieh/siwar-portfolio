@@ -25,7 +25,14 @@ Other scripts:
 
 ## Edit the content
 
-All text on the site lives in **`src/content/site.ts`**: hero, highlights, every section, experience, skills, contact and footer. Change the text there and the components update automatically. Components in `src/components/` only render that data.
+The site has two language versions built from the same components:
+
+| Version | URL | Text file |
+|---|---|---|
+| English | `/` | **`src/content/site.ts`** |
+| Arabic (right-to-left) | `/ar` | **`src/content/site.ar.ts`** |
+
+Each file holds all the text for one language: hero, highlights, every section, experience, skills, contact, footer and the small interface labels. Change the text there and the page updates automatically. Components in `src/components/` only render that data. Shared details (email, LinkedIn, photo, CV, site URL) are set once in `site.ts`; the Arabic file reuses them. When you add or remove an item in one language, do the same in the other, because TypeScript checks that both files have the same structure.
 
 ## Replace the photo
 
@@ -53,8 +60,11 @@ No custom domain is required.
 ```
 public/                    portrait (original + optimized) and CV
 scripts/optimize-portrait.mjs
-src/app/                   layout, page, icon, OG image, robots, sitemap
-src/components/            reusable UI components
-src/content/site.ts        all site text
-src/lib/                   site URL helper, OG image renderer
+src/app/(en)/              English layout + page  (/)
+src/app/(ar)/ar/           Arabic layout + page   (/ar, right-to-left)
+src/app/                   share image, favicon, robots, sitemap, 404 page
+src/components/            reusable UI components (HomePage renders either language)
+src/content/site.ts        English text + shared details
+src/content/site.ar.ts     Arabic text
+src/lib/                   fonts, metadata, site URL helper, share-image renderer
 ```

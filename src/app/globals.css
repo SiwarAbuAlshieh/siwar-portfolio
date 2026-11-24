@@ -10,10 +10,24 @@
   --color-champagne-ink: #7d6240; /* same hue, darkened for AA-contrast text on light backgrounds */
   --color-grey: #6b6b6b; /* darkened from #747474 for ≥4.5:1 on ivory */
 
-  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
-  --font-sans: var(--font-manrope), "Manrope", system-ui, sans-serif;
+  /* Fonts switch per language via --font-heading / --font-body (set below). */
+  --font-serif: var(--font-heading);
+  --font-sans: var(--font-body);
+  --font-latin-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
 
   --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+:root {
+  --font-heading: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-body: var(--font-manrope), "Manrope", system-ui, sans-serif;
+}
+
+/* Arabic: Noto Naskh Arabic for headings, IBM Plex Sans Arabic for text.
+   Latin words inside Arabic text fall back to the English fonts. */
+:root[lang="ar"] {
+  --font-heading: var(--font-naskh), var(--font-cormorant), Georgia, serif;
+  --font-body: var(--font-plex-arabic), var(--font-manrope), system-ui, sans-serif;
 }
 
 @layer base {
@@ -38,6 +52,7 @@
 
   /* Cormorant defaults to old-style figures ("o1"); use lining figures for numbers. */
   .font-serif,
+  .font-latin-serif,
   h1,
   h2,
   h3 {
@@ -54,6 +69,36 @@
     background: var(--color-beige);
     color: var(--color-charcoal);
   }
+}
+
+/* Arabic typography adjustments.
+   - Letter-spacing breaks the joining of Arabic letters, so it is removed.
+   - Arabic needs more line height than the tight Latin display settings.
+   - Arabic has no true italic; keep it upright. */
+:root[lang="ar"] [class*="tracking-"] {
+  letter-spacing: 0 !important;
+}
+:root[lang="ar"] body {
+  line-height: 1.85;
+}
+:root[lang="ar"] :is(h1, h2, h3) {
+  line-height: 1.45 !important;
+}
+:root[lang="ar"] .hero-title {
+  line-height: 1.35 !important;
+  max-width: 16ch;
+}
+:root[lang="ar"] .italic {
+  font-style: normal;
+}
+:root[lang="ar"] .uppercase {
+  text-transform: none;
+}
+:root[lang="ar"] .label-small {
+  font-size: 14px;
+}
+:root[lang="ar"] .font-latin-serif {
+  line-height: 1.15;
 }
 
 /* Gentle fade-up on section enter. Only applied when JS has marked the page ready

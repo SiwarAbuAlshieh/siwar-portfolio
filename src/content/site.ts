@@ -683,3 +683,52 @@ export const contact = {
   emailButton: "Email me",
   cvButton: "Download My CV",
 };
+
+/* ------------------------------------------------------------------ */
+/* Interface labels (screen-reader text, menu, language switch)       */
+/* ------------------------------------------------------------------ */
+
+export const ui = {
+  skipToContent: "Skip to content",
+  openMenu: "Open menu",
+  closeMenu: "Close menu",
+  mainNav: "Main",
+  mobileNav: "Mobile",
+  newTab: "(opens in a new tab)",
+  atAGlance: "At a glance",
+  step: "Step",
+  croSequence: "Conversion optimization sequence",
+  flowLabel: "From business requirement to progress update",
+  /** Link to the other language version. */
+  language: { label: "العربية", href: "/ar", hrefLang: "ar", title: "النسخة العربية" },
+};
+
+/* ------------------------------------------------------------------ */
+/* Everything above, as one object (English version)                  */
+/* ------------------------------------------------------------------ */
+
+export const en = {
+  locale: "en" as Locale,
+  dir: "ltr" as "ltr" | "rtl",
+  site,
+  nav,
+  hero,
+  highlights,
+  about,
+  expertise,
+  cro,
+  brands,
+  communication,
+  taskManagement,
+  marketing,
+  ai,
+  approach,
+  skills,
+  experience,
+  education,
+  contact,
+  ui,
+};
+
+export type Locale = "en" | "ar";
+export type SiteContent = typeof en;

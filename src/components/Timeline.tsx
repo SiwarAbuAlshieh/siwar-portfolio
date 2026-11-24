@@ -12,7 +12,7 @@ export function Timeline({ entries }: { entries: ExperienceEntry[] }) {
           <p className="pt-1 text-[14px] font-medium tracking-[0.02em] text-grey">{entry.period}</p>
           <div
             className={
-              entry.featured ? "rounded-[5px] border border-beige bg-ivory p-7 md:p-10" : "md:pr-10"
+              entry.featured ? "rounded-[5px] border border-beige bg-ivory p-7 md:p-10" : "md:pe-10"
             }
           >
             <h3
@@ -20,7 +20,7 @@ export function Timeline({ entries }: { entries: ExperienceEntry[] }) {
                 entry.featured ? "text-[2rem] md:text-[2.4rem]" : "text-[1.6rem] md:text-[1.8rem]"
               }`}
             >
-              {entry.role} <span className="text-champagne-ink">—</span> {entry.company}
+              <bdi>{entry.role}</bdi> <span className="text-champagne-ink">—</span> <bdi>{entry.company}</bdi>
             </h3>
             {entry.summary ? (
               <p className="mt-3 max-w-[65ch] text-[16px] text-charcoal/85">{entry.summary}</p>
@@ -29,7 +29,7 @@ export function Timeline({ entries }: { entries: ExperienceEntry[] }) {
               <dl className="mt-8 grid grid-cols-1 gap-x-10 gap-y-7 md:grid-cols-2">
                 {entry.groups.map((group) => (
                   <div key={group.title} className="border-t border-beige pt-5">
-                    <dt className="text-[12.5px] font-semibold uppercase tracking-[0.14em] text-champagne-ink">
+                    <dt className="label-small text-[12.5px] font-semibold uppercase tracking-[0.14em] text-champagne-ink">
                       {group.title}
                     </dt>
                     <dd className="mt-2 text-[15.5px] text-charcoal/85">{group.text}</dd>

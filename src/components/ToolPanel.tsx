@@ -50,7 +50,11 @@ export function FlowDiagram({
         <li key={step.title} className="flex flex-col items-center lg:flex-1 lg:flex-row lg:items-stretch">
           <div className="flex w-full flex-col justify-center rounded-[4px] border border-beige bg-white px-4 py-4 text-center lg:min-h-[92px]">
             <p className="text-[15px] font-semibold leading-snug text-charcoal">{step.title}</p>
-            {step.tool ? <p className="mt-1 text-[13px] text-grey">({step.tool})</p> : null}
+            {step.tool ? (
+              <p className="mt-1 text-[13px] text-grey">
+                (<span dir="ltr">{step.tool}</span>)
+              </p>
+            ) : null}
           </div>
           {i < steps.length - 1 ? (
             <>
@@ -58,7 +62,7 @@ export function FlowDiagram({
               <ArrowRight
                 aria-hidden="true"
                 strokeWidth={1.5}
-                className="mx-2 hidden h-5 w-5 shrink-0 self-center text-champagne lg:block"
+                className="mx-2 hidden h-5 w-5 shrink-0 self-center text-champagne lg:block rtl:rotate-180"
               />
             </>
           ) : null}
