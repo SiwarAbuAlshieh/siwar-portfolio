@@ -593,7 +593,7 @@ export const experience = {
   entries: [
     {
       role: "Software Engineer",
-      company: "QEEN",
+      company: "qeen",
       period: "May 2024 – August 2026",
       featured: true,
       groups: [
