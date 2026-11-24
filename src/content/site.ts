@@ -100,7 +100,7 @@ export const site = {
    * While empty, the site falls back to Vercel's production URL
    * (set automatically by Vercel) or http://localhost:3000.
    */
-  url: "",
+  url: "https://siwar-abu-alshieh.vercel.app",
   meta: {
     title: "Siwar Abu Alshieh — Shopify Developer & Technical CRO Specialist",
     description:
